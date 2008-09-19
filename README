@@ -1,0 +1,47 @@
+Given SQL configuration and data values, run that SQL configuration against
+a database.
+
+The intent is that this file(s) can be dropped into a web-application.
+The web-app then parses them, creates forms on the fly for various
+queries and sends those queries to the DB with the right criteria.
+
+This is to do real quick queries, like mysqladmin.
+
+-- begin snip --
+
+-- db.name: Production
+-- db.driver: com.mysql.jdbc.Driver
+-- db.url: jdbc:mysql://localhost:3306/dash 
+-- db.username: dash
+-- db.password: dash
+
+-- query.name: Last 10 Requests by Customer 
+-- query.data.customer.type: String
+SELECT   customer_request_call_audit.end_time,
+         customer.name,
+         customer_request_call_audit.operation,
+         customer_request_call_audit.arguments
+FROM     customer_request_call_audit,
+         service_agreement,
+         customer
+where    customer_request_call_audit.service_agreement_id = service_agreement.id
+and      service_agreement.customer_id = customer.id
+and      customer.name = #customer#
+order by end_time desc 
+LIMIT    0,10
+
+-- query.name: Get All Customers
+select * from customer;
+
+-- end snip
+
+- ConfigurationParser
+Need piece that parses all configs & queries and puts them into a logical
+data structure.
+
+- QueryHandler
+Takes in connection info, a query template and query data and hits the db.
+
+- Interface
+Talks to parser and displays forms.  At some point it should be able to 
+take validation type information, number ranges, regex?
