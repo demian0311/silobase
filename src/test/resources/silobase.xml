@@ -1,0 +1,27 @@
+<silobase>
+	<db>
+   		<driver>com.mysql.jdbc.Driver</driver>
+   		<url>jdbc:mysql://localhost:3306/dash</url>
+   		<username>dash</username>
+		<password>dash</password>
+	</db>
+	<query>
+		<name>Users by Customer</name>
+		<sql> 
+			select   user.username,
+         			 user.first_name,
+         			 user.last_name,
+         			 user.title
+			from     user,
+			         customer
+			where    user.customer_id = customer.id
+			and      customer.name = :customer_name
+		</sql>
+	</query>	
+	<query>
+		<name>All Customers</name>
+		<sql> 
+			select * from customer
+		</sql>
+	</query>
+</silobase>
