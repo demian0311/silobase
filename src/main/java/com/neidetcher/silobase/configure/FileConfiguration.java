@@ -11,7 +11,7 @@ import javax.xml.xpath.XPathFactory;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
@@ -55,10 +55,10 @@ public class FileConfiguration implements Configuration
          log.debug("nodes: " + ToStringBuilder.reflectionToString(nodes));
          for (int ii = 0; ii < nodes.getLength(); ii++)
          {
-            Node node = nodes.item(ii);
-            log.debug("node: " + node);
+            Element node = (Element) nodes.item(ii);
+            log.debug("node: " + node.getTextContent());
 
-            queryNames.add(node.getNodeValue());
+            queryNames.add(node.getTextContent());
          }
       }
       catch (XPathExpressionException e)
