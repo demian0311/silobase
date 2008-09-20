@@ -1,5 +1,7 @@
 package com.neidetcher.silobase.configure;
 
+import java.util.List;
+
 import junit.framework.TestCase;
 
 public class FileConfigurationTest extends TestCase
@@ -11,10 +13,12 @@ public class FileConfigurationTest extends TestCase
    protected void setUp() throws Exception
    {
       fileConfiguration = new FileConfiguration();
+      fileConfiguration.setFile("src/test/resources/silobase.xml");
    }
 
-   public void testGetQueries()
+   public void testGetQueryNames()
    {
-      fileConfiguration.setFile("silobase.sql");
+      List<String> queryNames = fileConfiguration.getQueryNames();
+      System.out.println("queryNames: " + queryNames);
    }
 }
