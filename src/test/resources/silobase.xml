@@ -1,14 +1,12 @@
 <silobase> 
 	<databases>
-		<database>
-			<name>local</name>
+		<database id="local">
 			<driver>com.mysql.jdbc.Driver</driver>
 			<url>jdbc:mysql://localhost:3306/dash</url>
 			<username>dash</username>
 			<password>dash</password>
 		</database>
-		<database>
-			<name>staging</name>
+		<database id="staging">
 			<driver>com.mysql.jdbc.Driver</driver>
 			<url>jdbc:mysql://localhost:3306/dash</url>
 			<username>dash</username>
@@ -16,9 +14,8 @@
 		</database>
 	</databases>
 	<queries>
-		<query>
-			<name>Users by Customer</name>
-			<database>local</database>
+		<query id="Users by Customer">
+			<database idref="local"/>
 			<sql>
 				select 	user.username, 
 						user.first_name, 
@@ -30,9 +27,8 @@
 				and 	customer.name    = :customer_name
 			</sql>
 		</query>
-		<query>
-			<database>staging</database>
-			<name>All Customers</name>
+		<query id="All Customers">
+			<database idref="staging"/>
 			<sql>select * from customer</sql>
 		</query>
 	</queries>

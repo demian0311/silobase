@@ -4,6 +4,8 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import com.neidetcher.silobase.Query;
+
 public class FileConfigurationTest extends TestCase
 {
 
@@ -24,5 +26,11 @@ public class FileConfigurationTest extends TestCase
       assertEquals("All Customers", queryNames.get(1));
 
       System.out.println("queryNames: " + queryNames);
+   }
+
+   public void testGetQuery()
+   {
+      Query query = fileConfiguration.getQuery("All Customers");
+      assertNotNull(query);
    }
 }
