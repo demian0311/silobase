@@ -2,22 +2,21 @@ package com.neidetcher.silobase.configure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
+import com.neidetcher.silobase.InputField;
 import com.neidetcher.silobase.Query;
+import com.neidetcher.silobase.util.XPathHelper;
 
+/**
+ * Provides configuration information.  Must be set with the path and filename of
+ * a valid SiloBase XML file.
+ */
 public class FileConfiguration implements Configuration
 {
 
@@ -28,138 +27,62 @@ public class FileConfiguration implements Configuration
    @Override
    public Query getQuery(String queryName)
    {
-      if (queryName == null || "".equals(queryName))
+      XPathHelper xPathHelper = new XPathHelper(file);
+
+      String queryPrefix = "//query[@id=\'" + queryName + "']/";
+
+      String sql = xPathHelper.getString(queryPrefix + "sql");
+      String database = xPathHelper.getString(queryPrefix + "database/@idref");
+
+      String databasePrefix = "//database[@id=\'" + database + "']/";
+      String driver = xPathHelper.getString(databasePrefix + "driver");
+      String url = xPathHelper.getString(databasePrefix + "url");
+      String username = xPathHelper.getString(databasePrefix + "username");
+      String password = xPathHelper.getString(databasePrefix + "password");
+
+      DriverManagerDataSource dbConnInfo = new DriverManagerDataSource(url, username, password);
+      dbConnInfo.setDriverClassName(driver);
+
+      List<InputField> inputFields = getInputFieldsBySql(sql);
+
+      Query query = new Query(queryName, dbConnInfo, sql, inputFields);
+
+      return query;
+   }
+
+   private List<InputField> getInputFieldsBySql(String sqlIn)
+   {
+      log.debug("looking for input fields in: " + sqlIn);
+
+      List<InputField> inputFields = new ArrayList<InputField>();
+
+      StringTokenizer st = new StringTokenizer(sqlIn);
+      while (st.hasMoreTokens())
       {
-         throw new IllegalArgumentException("query name can't be null or blank");
-      }
-
-      XPath xpath = XPathFactory.newInstance().newXPath();
-      String expression = "/silobase/queries/*";
-      InputSource inputSource = new InputSource(file);
-      try
-      {
-         /*
-         <query>
-            <database>staging</database>
-            <name>All Customers</name>
-            <sql>select * from customer</sql>
-         </query>
-          */
-         NodeList queryNodes = (NodeList) xpath.evaluate(expression, inputSource, XPathConstants.NODESET);
-
-         //log.debug("nodes: " + ToStringBuilder.reflectionToString(nodes));
-
-         loopThruQueries: for (int ii = 0; ii < queryNodes.getLength(); ii++)
+         String currToken = st.nextToken();
+         if (currToken.startsWith(":"))
          {
-            // look for the right one
-            Element queryNode = (Element) queryNodes.item(ii);
-            log.debug("ii>> " + queryNode.getTagName() + ":" + queryNode.getTextContent());
-
-            NodeList queryAttributeNodes = queryNode.getChildNodes();
-
-            String database = null;
-            String sql = null;
-
-            for (int jj = 0; jj < queryAttributeNodes.getLength(); jj++)
-            {
-               database = null;
-               sql = null;
-
-               Node queryAttributeNode = queryAttributeNodes.item(jj);
-               String attributeName = queryAttributeNode.getNodeName();
-               String attributeValue = queryAttributeNode.getTextContent();
-
-               log.debug("jj>>" + queryAttributeNode.getNodeName() + ":" + queryAttributeNode.getTextContent());
-
-               if ("name".equals(attributeName) && !queryName.equals(attributeValue))
-               {
-                  log.debug("not a match: " + attributeValue);
-                  break loopThruQueries;
-               }
-
-               if ("sql".equals(attributeName))
-               {
-                  sql = attributeValue;
-               }
-
-               if ("database".equals(attributeName))
-               {
-                  database = attributeValue;
-               }
-            }
-
-            log.debug("actual name: " + queryName);
-            log.debug("actual sql: " + sql);
-            log.debug("actual database: " + database);
-
-            //            NodeList queryChildren = node.getChildNodes();
-            //            boolean correctQueryName = false;
-            //            for (int jj = 0; jj < queryChildren.getLength(); jj++)
-            //            {
-            //               Element currQueryChild = (Element) nodes.item(jj);
-            //               log.debug(currQueryChild.getTagName() + ":" + currQueryChild.getTextContent());
-            //
-            //               if ("name".equals(currQueryChild.getTagName()))
-            //               {
-            //                  queryName = currQueryChild.getTextContent();
-            //                  if (name.equals(queryName))
-            //                  {
-            //                     correctQueryName = true;
-            //                  }
-            //               }
-            //               else if ("database".equals(currQueryChild.getTagName()))
-            //               {
-            //                  dataSource = currQueryChild.getTextContent();
-            //               }
-            //               else if ("sql".equals(currQueryChild.getTagName()))
-            //               {
-            //                  sql = currQueryChild.getTextContent();
-            //               }
-            //               else
-            //               {
-            //                  log.warn("found a tag under query we don't know about: " + currQueryChild.getTagName());
-            //               }
-            //
-            //               if (correctQueryName)
-            //               {
-            //                  log.debug("queryName  : " + queryName);
-            //                  log.debug("dataSource : " + dataSource);
-            //                  log.debug("sql        : " + sql);
-            //               }
-            //            }
+            log.debug("found an input field: " + currToken);
+            inputFields.add(new InputField(currToken.substring(1)));
          }
       }
-      catch (XPathExpressionException e)
-      {
-         e.printStackTrace();
-      }
-      return null;
+
+      return inputFields;
    }
 
    @Override
    public List<String> getQueryNames()
    {
       List<String> queryNames = new ArrayList<String>();
+      XPathHelper xPathHelper = new XPathHelper(file);
 
-      XPath xpath = XPathFactory.newInstance().newXPath();
-      String expression = "/silobase/queries/*/name";
-      InputSource inputSource = new InputSource(file);
-      try
+      String expression = "//query/@id";
+      NodeList queryNodeList = xPathHelper.getNodeList(expression);
+
+      for (int i = 0; i < queryNodeList.getLength(); i++)
       {
-         NodeList nodes = (NodeList) xpath.evaluate(expression, inputSource, XPathConstants.NODESET);
-
-         log.debug("nodes: " + ToStringBuilder.reflectionToString(nodes));
-         for (int ii = 0; ii < nodes.getLength(); ii++)
-         {
-            Element node = (Element) nodes.item(ii);
-            log.debug("node: " + node.getTextContent());
-
-            queryNames.add(node.getTextContent());
-         }
-      }
-      catch (XPathExpressionException e)
-      {
-         e.printStackTrace();
+         org.w3c.dom.Node node = queryNodeList.item(i);
+         queryNames.add(node.getNodeValue());
       }
 
       return queryNames;

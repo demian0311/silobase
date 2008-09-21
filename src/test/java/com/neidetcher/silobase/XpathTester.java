@@ -15,6 +15,27 @@ import org.xml.sax.InputSource;
 public class XpathTester extends TestCase
 {
 
+   public void test1() throws Exception
+   {
+      String expression = "//query/@id";
+      String filename = "src/test/resources/silobase.xml";
+      XPath xpath = XPathFactory.newInstance().newXPath();
+      InputSource inputSource = new InputSource(filename);
+      NodeList attrImpl = (NodeList) xpath.evaluate(expression, inputSource, XPathConstants.NODESET);
+      for (int i = 0; i < attrImpl.getLength(); i++)
+      {
+         org.w3c.dom.Node node = attrImpl.item(i);
+         System.out.println("name: " + node.getNodeName());
+         System.out.println("value: " + node.getNodeValue());
+
+         //      {
+         //         System.out.println("name: " + attrImpl.getName());
+         //         System.out.println("value: " + attrImpl.getValue());
+         //         Element el = (Element) elements.item(i);
+         //         System.out.println("content: " + el.getTextContent());
+      }
+   }
+
    public void testExpression() throws XPathExpressionException, TransformerException
    {
       String expression = "/silobase/queries/*/name";

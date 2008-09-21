@@ -4,6 +4,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import com.neidetcher.silobase.InputField;
 import com.neidetcher.silobase.Query;
 
 public class FileConfigurationTest extends TestCase
@@ -28,9 +29,22 @@ public class FileConfigurationTest extends TestCase
       System.out.println("queryNames: " + queryNames);
    }
 
-   public void testGetQuery()
+   public void testGetQuery_allCustomers()
    {
       Query query = fileConfiguration.getQuery("All Customers");
       assertNotNull(query);
+      assertEquals("select * from customer", query.getSql());
+   }
+
+   public void testGetQuery_usersByCustomer()
+   {
+      Query query = fileConfiguration.getQuery("Users by Customer");
+      assertNotNull(query);
+
+      for (InputField currInputField : query.getInputFields())
+      {
+         System.out.println("currInputField: " + currInputField);
+      }
+
    }
 }

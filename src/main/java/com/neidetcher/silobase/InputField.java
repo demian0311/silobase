@@ -12,7 +12,7 @@ public class InputField
 
    // ordinal
    public final String name;
-   public final String value;
+   public String value;
 
    //   public final Type type;
 
@@ -39,6 +39,11 @@ public class InputField
    //   {
    //      STRING, NUMBER
    //   }
+
+   public InputField(String nameIn)
+   {
+      name = nameIn;
+   }
 
    public InputField(String nameIn, String valueIn)//, Type typeIn)
    {
