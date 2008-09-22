@@ -31,5 +31,11 @@
 			<database idref="staging"/>
 			<sql>select * from customer</sql>
 		</query>
+		<query id="All Codecs">
+			<database idref="staging"/>
+			<sql>select id, name from codec</sql>
+		</query>
+		
+		
 	</queries>
 </silobase>

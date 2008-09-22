@@ -14,7 +14,6 @@
 <table border="0">
 
 <% if (!query.getInputFields().isEmpty()) { %>
-there are input parameters!
 <% for(InputField currField : query.getInputFields()) { %>
 	<tr><td><%=currField.getPrettyName()%></td>
 	<td><input type="text" name="<%=currField.getName()%>" value="<%=currField.getValue()%>" /></td></tr>
@@ -27,15 +26,27 @@ there are input parameters!
 </table>
 
 <% if (!query.getResults().isEmpty()) { %>
-<ul>
-	<% for(Map<String, String> currRow : query.getResults()) { %>
-		<li><%=currRow %></li>
+<table border="1">
+	<tr>
+	<% for(String columnName : query.getResults().get(0).keySet()) { %>
+		<th><%=columnName%></th>
 	<% } %>
-</ul>
+	</tr>
+	
+	<% for(Map currRow : query.getResults()) { %>
+		<tr>
+			<% for(Object columnName : currRow.keySet()) { %>
+				<td><%=""+currRow.get(columnName.toString())%></td>
+			<% } %>
+		</tr>
+	<% } %>
+</table>
 <% } %>
 
 
+<hr/>
 <pre>
+DEBUG INFO
 <%=query%>
 </pre>
 

@@ -51,6 +51,7 @@ public class QueryServlet extends HttpServlet
          }
 
          getService().performQuery(query);
+
       }
 
       HttpSession session = request.getSession();
