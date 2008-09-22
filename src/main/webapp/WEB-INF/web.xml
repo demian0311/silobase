@@ -3,5 +3,27 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>SiloBase</display-name>
+  
+    <servlet>
+    <servlet-name>ListServlet</servlet-name>
+    <servlet-class>com.neidetcher.silobase.ui.servlet.ListServlet</servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+     <servlet-name>ListServlet</servlet-name>
+     <url-pattern>/list/*</url-pattern>
+   </servlet-mapping>
+   
+    <servlet>
+    <servlet-name>QueryServlet</servlet-name>
+    <servlet-class>com.neidetcher.silobase.ui.servlet.QueryServlet</servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+     <servlet-name>QueryServlet</servlet-name>
+     <url-pattern>/query/*</url-pattern>
+   </servlet-mapping>
+   
+   
 </web-app>

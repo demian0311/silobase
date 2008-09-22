@@ -1,5 +1,6 @@
 package com.neidetcher.silobase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,9 +61,18 @@ public class Query
       return result;
    }
 
-   public void setResult(List<Map<String, String>> result)
+   public void setResults(List<Map<String, String>> result)
    {
       this.result = result;
+   }
+
+   public List<Map<String, String>> getResults()
+   {
+      if (this.result == null)
+      {
+         return new ArrayList<Map<String, String>>();
+      }
+      return this.result;
    }
 
    @Override

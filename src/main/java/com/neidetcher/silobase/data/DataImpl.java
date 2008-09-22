@@ -23,6 +23,6 @@ public class DataImpl implements Data
       NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(queryIn.getDataSource());
       List<Map<String, String>> result = template.queryForList(sql, queryIn.getInputFieldsAsMap());
 
-      queryIn.setResult(result);
+      queryIn.setResults(result);
    }
 }

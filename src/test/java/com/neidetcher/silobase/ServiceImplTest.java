@@ -58,7 +58,7 @@ public class ServiceImplTest extends TestCase
          if ("customer_name".equals(currInputField.getName()))
          {
             currInputField.setValue("VoIP Planet");
-            assertEquals("customer name", currInputField.getPretyName());
+            assertEquals("customer name", currInputField.getPrettyName());
          }
       }
 

@@ -48,13 +48,17 @@ public class InputField
       return name;
    }
 
-   public String getPretyName()
+   public String getPrettyName()
    {
       return name.replace('_', ' ');
    }
 
    public String getValue()
    {
+      if (value == null)
+      {
+         return "";
+      }
       return value;
    }
 
