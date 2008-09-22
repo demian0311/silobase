@@ -1,47 +1,19 @@
-Given SQL configuration and data values, run that SQL configuration against
-a database.
+SiloBase is a simple framework for running canned queries. 
+You store connection information and SQL in an XML file, 
+we prompt you to fill in the fields (if any) and run the 
+query sending the results back to you.
 
-The intent is that this file(s) can be dropped into a web-application.
-The web-app then parses them, creates forms on the fly for various
-queries and sends those queries to the DB with the right criteria.
+This tool fits in a situation where you might want to run 
+the same query but you don't want to always have a 
+database console open or some other tool. It may also be 
+good when you need to give users access to information 
+but don't have a full-blown n-tier application in place. 
+Of course you don't want to give your users database 
+connection info or a tool like TOAD or MySQL Query Browser. 
 
-This is to do real quick queries, like mysqladmin.
+--- 
+web site: http://neidetcher.com/silobase.html
+scm: git://github.com/demian0311/silobase.git
 
--- begin snip --
+Tests won't work unless you have a database around.
 
--- db.name: Production
--- db.driver: com.mysql.jdbc.Driver
--- db.url: jdbc:mysql://localhost:3306/dash 
--- db.username: dash
--- db.password: dash
-
--- query.name: Last 10 Requests by Customer 
--- query.data.customer.type: String
-SELECT   customer_request_call_audit.end_time,
-         customer.name,
-         customer_request_call_audit.operation,
-         customer_request_call_audit.arguments
-FROM     customer_request_call_audit,
-         service_agreement,
-         customer
-where    customer_request_call_audit.service_agreement_id = service_agreement.id
-and      service_agreement.customer_id = customer.id
-and      customer.name = #customer#
-order by end_time desc 
-LIMIT    0,10
-
--- query.name: Get All Customers
-select * from customer;
-
--- end snip
-
-- ConfigurationParser
-Need piece that parses all configs & queries and puts them into a logical
-data structure.
-
-- QueryHandler
-Takes in connection info, a query template and query data and hits the db.
-
-- Interface
-Talks to parser and displays forms.  At some point it should be able to 
-take validation type information, number ranges, regex?

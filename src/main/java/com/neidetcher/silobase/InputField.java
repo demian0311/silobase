@@ -57,9 +57,19 @@ public class InputField
       return name;
    }
 
+   public String getPretyName()
+   {
+      return name.replace('_', ' ');
+   }
+
    public String getValue()
    {
       return value;
+   }
+
+   public void setValue(String valueIn)
+   {
+      value = valueIn;
    }
 
    //   public Type getType()
