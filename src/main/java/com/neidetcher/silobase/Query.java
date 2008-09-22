@@ -3,6 +3,7 @@ package com.neidetcher.silobase;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 /**
@@ -62,6 +63,12 @@ public class Query
    public void setResult(List<Map<String, String>> result)
    {
       this.result = result;
+   }
+
+   @Override
+   public String toString()
+   {
+      return ToStringBuilder.reflectionToString(this);
    }
 
 }

@@ -4,17 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 /**
  * represents a field that would come from the user.
  */
 public class InputField
 {
 
-   // ordinal
    public final String name;
    public String value;
-
-   //   public final Type type;
 
    public static Map<String, String> generateSqlParameterSource(List<InputField> inputFields)
    {
@@ -31,14 +30,6 @@ public class InputField
       }
       return map;
    }
-
-   //   /**
-   //    * valid types for an input field.
-   //    */
-   //   public enum Type
-   //   {
-   //      STRING, NUMBER
-   //   }
 
    public InputField(String nameIn)
    {
@@ -72,9 +63,10 @@ public class InputField
       value = valueIn;
    }
 
-   //   public Type getType()
-   //   {
-   //      return type;
-   //   }
+   @Override
+   public String toString()
+   {
+      return ToStringBuilder.reflectionToString(this);
+   }
 
 }

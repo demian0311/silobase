@@ -3,11 +3,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 <modelVersion>4.0.0</modelVersion>
 <groupId>com.neidetcher</groupId>
 <artifactId>silobase</artifactId>
-<packaging>jar</packaging>
-<version>0.1</version>
-<name>silobase</name>
+<packaging>war</packaging>
+<version>0.2</version>
+<name>SiloBase</name>
 <description>
-Easy database querying application.
+SiloBase is a simple framework for running canned queries. 
+You store connection information and SQL in an XML file, 
+we prompt you to fill in the fields (if any) and run the 
+query sending the results back to you.
 </description>
 
 <!--licenses>
@@ -30,90 +33,103 @@ Easy database querying application.
 
 <repositories>
 
-<repository>
-<id>maven</id>
-<name>Maven</name>
-<url>http://repo1.maven.org/maven2</url>
-</repository>
+   <repository>
+   <id>maven</id>
+   <name>Maven</name>
+   <url>http://repo1.maven.org/maven2</url>
+   </repository>
 
-<repository>
-<id>Apache</id>
-<name>Apache</name>
-<url>http://people.apache.org/repo/m2-ibiblio-rsync-repository</url>
-</repository>
+   <repository>
+   <id>Apache</id>
+   <name>Apache</name>
+   <url>http://people.apache.org/repo/m2-ibiblio-rsync-repository</url>
+   </repository>
 
 </repositories>
 
 
 <dependencies>
 
-<dependency>
-<groupId>junit</groupId>
-<artifactId>junit</artifactId>
-<version>3.8.1</version>
-<scope>test</scope>
-</dependency>
+   <dependency>
+   <groupId>junit</groupId>
+   <artifactId>junit</artifactId>
+   <version>3.8.1</version>
+   <scope>test</scope>
+   </dependency>
 
-<dependency>
-<groupId>org.springframework</groupId>
-<artifactId>spring-jdbc</artifactId>
-<version>2.5</version>
-</dependency>
+   <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>servlet-api</artifactId>
+   <version>2.4</version>
+   <scope>provided</scope>
+   </dependency>
 
-<!--dependency>
-<groupId>org.springframework</groupId>
-<artifactId>spring-orm</artifactId>
-<version>2.5</version>
-</dependency-->
+   <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>jsp-api</artifactId>
+   <version>2.0</version>
+   <scope>provided</scope>
+   </dependency>
 
-<!--dependency>
-<groupId>commons-dbcp</groupId>
-<artifactId>commons-dbcp</artifactId>
-<version>1.2.2</version>
-</dependency-->
+   <dependency>
+   <groupId>javax.servlet</groupId>
+   <artifactId>jstl</artifactId>
+   <version>1.1.2</version>
+   <scope>provided</scope>
+   </dependency>
 
-<!--dependency>
-<groupId>commons-lang</groupId>
-<artifactId>commons-lang</artifactId>
-<version>2.4</version>
-</dependency-->
+   <dependency>
+   <groupId>org.springframework</groupId>
+   <artifactId>spring-jdbc</artifactId>
+   <version>2.5</version>
+   </dependency>
 
-<dependency>
-<groupId>mysql</groupId>
-<artifactId>mysql-connector-java</artifactId>
-<version>5.0.5</version>
-</dependency>
+   <!-- need to add more? -->
+   <dependency>
+   <groupId>mysql</groupId>
+   <artifactId>mysql-connector-java</artifactId>
+   <version>5.0.5</version>
+   </dependency>
 
-<dependency>
-<groupId>commons-logging</groupId>
-<artifactId>commons-logging</artifactId>
-<version>1.1</version>
-</dependency>
+   <dependency>
+   <groupId>commons-logging</groupId>
+   <artifactId>commons-logging</artifactId>
+   <version>1.1</version>
+   </dependency>
 
-<dependency>
-<groupId>commons-lang</groupId>
-<artifactId>commons-lang</artifactId>
-<version>2.4</version>
-</dependency>
+   <dependency>
+   <groupId>commons-lang</groupId>
+   <artifactId>commons-lang</artifactId>
+   <version>2.4</version>
+   </dependency>
 
-<dependency>
-<groupId>log4j</groupId>
-<artifactId>log4j</artifactId>
-<version>1.2.14</version>
-</dependency>
+   <dependency>
+   <groupId>log4j</groupId>
+   <artifactId>log4j</artifactId>
+   <version>1.2.14</version>
+   </dependency>
 
 </dependencies>
 
 <build>
 <plugins>
 
-<plugin>
-<artifactId>maven-compiler-plugin</artifactId>
-<configuration>
-<source>1.6</source>
-<target>1.6</target>
-</configuration>
-</plugin>
+   <plugin>
+   <artifactId>maven-compiler-plugin</artifactId>
+   <configuration>
+   <source>1.6</source>
+   <target>1.6</target>
+   </configuration>
+   </plugin>
+
+   <plugin>
+   <groupId>org.mortbay.jetty</groupId>
+   <artifactId>maven-jetty-plugin</artifactId>
+   <version>6.1.8</version>
+   <configuration>
+   <scanIntervalSeconds>10</scanIntervalSeconds>
+   </configuration>
+   </plugin>
 
 </plugins>
 </build>
