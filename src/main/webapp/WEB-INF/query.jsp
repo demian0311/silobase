@@ -1,7 +1,5 @@
 <%@ page import="com.neidetcher.silobase.*, java.util.*" %>
 
-<%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-
 <% Query query = (Query)session.getAttribute("query");%>
 <html>
 <body>

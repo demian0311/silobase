@@ -26,7 +26,7 @@ public class ListServlet extends HttpServlet
       //log.debug("request: " + ToStringBuilder.reflectionToString(request));
 
       response.setContentType("text/html");
-      Service si = ServiceImpl.createServiceImpl("src/test/resources/silobase.xml");
+      Service si = ServiceImpl.createServiceImpl("silobase.xml");
       HttpSession session = request.getSession();
       session.setAttribute("queryNames", si.getQueryNames());
 

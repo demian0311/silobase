@@ -39,7 +39,8 @@ public class QueryServlet extends HttpServlet
 
       Query query = getService().getQuery(queryName);
 
-      if (null != request.getParameter("form"))
+      // if we came from a form or we don't need any input fields do the query
+      if (null != request.getParameter("form") || query.getInputFields().isEmpty())
       {
          log.debug("we came from the form so we should look for data");
          log.debug("parameter map: " + request.getParameterMap());
@@ -51,7 +52,6 @@ public class QueryServlet extends HttpServlet
          }
 
          getService().performQuery(query);
-
       }
 
       HttpSession session = request.getSession();
@@ -65,7 +65,7 @@ public class QueryServlet extends HttpServlet
    {
       if (service == null)
       {
-         service = ServiceImpl.createServiceImpl("src/test/resources/silobase.xml");
+         service = ServiceImpl.createServiceImpl("silobase.xml");
       }
       return service;
    }

@@ -17,3 +17,10 @@ scm: git://github.com/demian0311/silobase.git
 
 Tests won't work unless you have a database around.
 
+---
+TODO:
+-  need to figure out how to access the xml file in a 
+   container agnostic way.
+   Perhaps this is getting the file via the classpath?
+-  more formatting
+-  better error handling and messaging
