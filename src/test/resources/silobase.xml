@@ -2,40 +2,17 @@
 	<databases>
 		<database id="local">
 			<driver>com.mysql.jdbc.Driver</driver>
-			<url>jdbc:mysql://localhost:3306/dash</url>
-			<username>dash</username>
-			<password>dash</password>
-		</database>
-		<database id="staging">
-			<driver>com.mysql.jdbc.Driver</driver>
-			<url>jdbc:mysql://localhost:3306/dash</url>
-			<username>dash</username>
-			<password>dash</password>
+			<url>jdbc:mysql://localhost:3306/scrumtaculous</url>
+			<username>scrumtaculous</username>
+			<password>scrumtaculous</password>
 		</database>
 	</databases>
 	<queries>
-		<query id="Users by Customer">
+		<query id="All Projects">
 			<database idref="local"/>
 			<sql>
-				select 	user.username, 
-						user.first_name, 
-						user.last_name,
-						user.title 
-				from 	user, 
-						customer 
-				where 	user.customer_id = customer.id 
-				and 	customer.name    = :customer_name
+            select * from project
 			</sql>
 		</query>
-		<query id="All Customers">
-			<database idref="staging"/>
-			<sql>select * from customer</sql>
-		</query>
-		<query id="All Codecs">
-			<database idref="staging"/>
-			<sql>select id, name from codec</sql>
-		</query>
-		
-		
 	</queries>
 </silobase>
