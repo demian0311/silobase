@@ -8,11 +8,23 @@
     <servlet>
     <servlet-name>ListServlet</servlet-name>
     <servlet-class>com.neidetcher.silobase.ui.servlet.ListServlet</servlet-class>
+
+      <init-param>
+      <param-name>debug</param-name>
+      <param-value>1</param-value>
+      </init-param>
+
+      <init-param>
+      <param-name>listings</param-name>
+      <param-value>true</param-value>
+      </init-param>
+
    </servlet>
 
    <servlet-mapping>
      <servlet-name>ListServlet</servlet-name>
-     <url-pattern>/list/*</url-pattern>
+     <!--url-pattern>/list/*</url-pattern-->
+     <url-pattern>/</url-pattern>
    </servlet-mapping>
    
     <servlet>
@@ -24,6 +36,5 @@
      <servlet-name>QueryServlet</servlet-name>
      <url-pattern>/query/*</url-pattern>
    </servlet-mapping>
-   
-   
+
 </web-app>
