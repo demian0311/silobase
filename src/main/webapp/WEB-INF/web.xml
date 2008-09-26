@@ -23,8 +23,7 @@
 
    <servlet-mapping>
      <servlet-name>ListServlet</servlet-name>
-     <!--url-pattern>/list/*</url-pattern-->
-     <url-pattern>/</url-pattern>
+     <url-pattern>/list/*</url-pattern>
    </servlet-mapping>
    
     <servlet>
@@ -36,5 +35,9 @@
      <servlet-name>QueryServlet</servlet-name>
      <url-pattern>/query/*</url-pattern>
    </servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
 
 </web-app>

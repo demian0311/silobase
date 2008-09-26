@@ -122,22 +122,30 @@ insert into iteration set
    number = 0,
    name = 'backlog',
    project_id = @PROJECT_ID;
-
 select @BACKLOG_ID := LAST_INSERT_ID();
 
 insert into iteration set
    number = 1,
-   name = 'make box',
+   name = 'cut out box parts',
    project_id = @PROJECT_ID;
-
 select @ITERATION_1_ID := LAST_INSERT_ID();
 
 insert into iteration set
-   number = 2,
+   number = 3,
+   name = 'make box',
    project_id = @PROJECT_ID;
 
 insert into iteration set
-   number = 3,
+   number = 4,
+   name = 'make more boxes',
+   project_id = @PROJECT_ID;
+
+insert into iteration set
+   number = 5,
+   project_id = @PROJECT_ID;
+
+insert into iteration set
+   number = 6,
    project_id = @PROJECT_ID;
 
    insert into story set
@@ -164,8 +172,8 @@ insert into iteration set
       iteration_id = @BACKLOG_ID,
       ordinal = 2;
 
-insert into story set
-   name = 'as an admin I should see a box',
-   iteration_id = @ITERATION_1_ID,
-   ordinal = 2;
+   insert into story set
+      name = 'as an admin I should see a box',
+      iteration_id = @ITERATION_1_ID,
+      ordinal = 3;
 
