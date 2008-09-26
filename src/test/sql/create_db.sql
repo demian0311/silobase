@@ -2,10 +2,10 @@
 
 -- mysql -u root -p
 --
--- create database if not exists scrumtaculous;
--- use scrumtaculous;
+-- create database if not exists st;
+-- use st;
 -- 
--- grant all on scrumtaculous.* to 'scrumtaculous'@'localhost' identified by 'scrumtaculous';
+-- grant all on st.* to 'st'@'localhost' identified by 'st';
 -- flush privileges;
 -- \q
 -- mysql < create_db.sql
@@ -15,9 +15,9 @@
 ----------
 
 
-drop database scrumtaculous;
-create database scrumtaculous;
-use scrumtaculous;
+drop database st;
+create database st;
+use st;
 
 create table project
 (
@@ -96,8 +96,24 @@ create table story_tag
 ----------
 -- test data
 ----------
+
 insert into project set
-   name = 'test 1',
+   name = 'visicalc',
+   iteration_length_weeks = 2,
+   kickoff = "20090808";
+
+insert into project set
+   name = 'navajo',
+   iteration_length_weeks = 2,
+   kickoff = "20100808";
+
+insert into project set
+   name = 'newton',
+   iteration_length_weeks = 2,
+   kickoff = "20080808";
+
+insert into project set
+   name = 'tivo',
    iteration_length_weeks = 2,
    kickoff = "20080808";
 select @PROJECT_ID := LAST_INSERT_ID();

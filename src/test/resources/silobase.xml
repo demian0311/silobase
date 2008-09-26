@@ -2,16 +2,31 @@
 	<databases>
 		<database id="local">
 			<driver>com.mysql.jdbc.Driver</driver>
-			<url>jdbc:mysql://localhost:3306/scrumtaculous</url>
-			<username>scrumtaculous</username>
-			<password>scrumtaculous</password>
+			<url>jdbc:mysql://localhost:3306/st</url>
+			<username>st</username>
+			<password>st</password>
 		</database>
 	</databases>
 	<queries>
 		<query id="All Projects">
 			<database idref="local"/>
 			<sql>
-            select * from project
+            select   id, 
+                     name,
+                     iteration_length_weeks as weeks,
+                     kickoff as 'start date'
+            from     project
+			</sql>
+		</query>
+		<query id="All Iterations for a Project">
+			<database idref="local"/>
+			<sql>
+            select   iteration.number,
+                     iteration.name
+            from     iteration,
+                     project
+            where    iteration.project_id = project.id
+            and      project.name = :project_name
 			</sql>
 		</query>
 	</queries>

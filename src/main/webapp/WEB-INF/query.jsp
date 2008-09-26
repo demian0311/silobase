@@ -2,9 +2,12 @@
 
 <% Query query = (Query)session.getAttribute("query");%>
 <html>
+<head>
+	<title></title>
+	<LINK REL="stylesheet" TYPE="text/css" HREF="style.css"/>
+</head>
 <body>
 <h2><a href="list">SiloBase</a> | <%=query.getName()%></h2>
-<hr/>
 
 <FORM action="query" method="get">
 <input type="hidden" name="name" value="<%=query.getName()%>"/>
@@ -18,10 +21,9 @@
 <% } %>
 
 <% } %>
-
-	</tr><td>&nbsp</td><td><input type="submit"/></td></tr>
-</form>
 </table>
+	<input type="submit"/>
+</form>
 
 <% if (!query.getResults().isEmpty()) { %>
 <table border="1">
@@ -41,13 +43,11 @@
 </table>
 <% } %>
 
-
-<hr/>
-<pre>
+<br/>
+<br/>
+<!--
 DEBUG INFO
 <%=query%>
-</pre>
-
-* 
+-->
 </body>
 </html>

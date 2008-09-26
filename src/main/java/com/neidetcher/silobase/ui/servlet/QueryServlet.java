@@ -65,7 +65,7 @@ public class QueryServlet extends HttpServlet
    {
       if (service == null)
       {
-         service = ServiceImpl.createServiceImpl("silobase.xml");
+         service = ServiceImpl.createServiceImpl("src/test/resources/silobase.xml");
       }
       return service;
    }
