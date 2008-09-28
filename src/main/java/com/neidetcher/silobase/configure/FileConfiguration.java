@@ -33,8 +33,17 @@ public class FileConfiguration implements Configuration
 
       String sql = xPathHelper.getString(queryPrefix + "sql");
       String database = xPathHelper.getString(queryPrefix + "database/@idref");
+      System.out.println("database: " + database);
 
       String databasePrefix = "//database[@id=\'" + database + "']/";
+      if ("".equals(database))
+      {
+         // find the first database and use that
+         databasePrefix = "//database/";
+      }
+
+      System.out.println("using databasePrefix: " + databasePrefix);
+
       String driver = xPathHelper.getString(databasePrefix + "driver");
       String url = xPathHelper.getString(databasePrefix + "url");
       String username = xPathHelper.getString(databasePrefix + "username");

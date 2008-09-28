@@ -23,22 +23,22 @@ public class FileConfigurationTest extends TestCase
    {
       List<String> queryNames = fileConfiguration.getQueryNames();
       assertEquals(2, queryNames.size());
-      assertEquals("Users by Customer", queryNames.get(0));
-      assertEquals("All Customers", queryNames.get(1));
+      assertEquals("All Projects", queryNames.get(0));
+      assertEquals("All Iterations for a Project", queryNames.get(1));
 
       System.out.println("queryNames: " + queryNames);
    }
 
-   public void testGetQuery_allCustomers()
+   public void testGetQuery_allProjects()
    {
-      Query query = fileConfiguration.getQuery("All Customers");
+      Query query = fileConfiguration.getQuery("All Projects");
       assertNotNull(query);
-      assertEquals("select * from customer", query.getSql());
+      //assertTrue(query.getSql().startsWith("select   id,"));
    }
 
    public void testGetQuery_usersByCustomer()
    {
-      Query query = fileConfiguration.getQuery("Users by Customer");
+      Query query = fileConfiguration.getQuery("All Iterations for a Project");
       assertNotNull(query);
 
       for (InputField currInputField : query.getInputFields())

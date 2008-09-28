@@ -23,4 +23,7 @@ TODO:
    container agnostic way.
    Perhaps this is getting the file via the classpath?
 -  more formatting
+-  make sure sql-injection can't happen
 -  better error handling and messaging
+-  if no db is specified in the query then we just
+   take the first database
