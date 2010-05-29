@@ -15,8 +15,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class Query
 {
 
-   // category?
-   // frequency
    private final DriverManagerDataSource dataSource;
    private final String name;
    private final String sql;
@@ -68,12 +66,31 @@ public class Query
 
    public List<Map<String, String>> getResults()
    {
-      if (this.result == null)
+      if (result == null)
       {
          return new ArrayList<Map<String, String>>();
       }
-      return this.result;
+      return result;
    }
+
+   //   public Map<String, List<String>> getSeries()
+   //   {
+   //       Map<String, List<String>> series = new HashMap<String, List<String>>();
+   //
+   //       int seriesCount = 0;
+   //       String currSeriesName = "";
+   //       for(Map<String, String> row : getResults())
+   //       {
+   //           System.out.println("row: " + row);
+   //           if(seriesCount == 0)
+   //           {
+   //              currSeriesName = row.
+   //           }
+   //
+   //       }
+   //
+   //       return series;
+   //   }
 
    @Override
    public String toString()

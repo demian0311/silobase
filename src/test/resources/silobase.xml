@@ -27,5 +27,10 @@
             and      project.name = :project_name
 			</sql>
 		</query>
+		<query id="Customer Bill Termination">
+			<sql>
+            select * from customer_bill;
+			</sql>
+		</query>
 	</queries>
 </silobase>

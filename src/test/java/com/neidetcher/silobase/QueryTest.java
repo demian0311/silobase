@@ -7,8 +7,27 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import com.neidetcher.silobase.configure.FileConfiguration;
+import com.neidetcher.silobase.data.DataImpl;
+
 public class QueryTest extends TestCase
 {
+
+   String TEST_FILE = "src/test/resources/silobase.xml";
+   ServiceImpl service;
+
+   @Override
+   public void setUp()
+   {
+      FileConfiguration fileConfiguration = new FileConfiguration();
+      fileConfiguration.setFile(TEST_FILE);
+
+      DataImpl data = new DataImpl();
+
+      service = new ServiceImpl();
+      service.setConfiguration(fileConfiguration);
+      service.setData(data);
+   }
 
    public void test()
    {
@@ -30,6 +49,18 @@ public class QueryTest extends TestCase
          System.out.println("key: " + key);
          System.out.println("result: " + results.get(0).get(key));
       }
-
    }
+
+   //   public void testGetSeries()
+   //   {
+   //        Query query = service.getQuery("Customer Bill Termination");
+   //        Map<String, List<String>> series = query.getSeries();
+   //
+   //        System.out.println("Customer Bill Termination");
+   //        System.out.println("series: " + series);
+   //        for(String currKey : series.keySet())
+   //        {
+   //            System.out.println("currKey: " + currKey);
+   //        }
+   //   }
 }

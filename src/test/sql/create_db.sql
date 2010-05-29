@@ -10,9 +10,7 @@
 -- \q
 -- mysql < create_db.sql
 
-----------
 -- create statements
-----------
 
 
 drop database st;
@@ -93,9 +91,63 @@ create table story_tag
    unique  key tag_name_unique_for_story_id (story_id, name)
 ) engine=innodb;
 
-----------
+create table customer_bill
+(
+   year  integer unsigned not null,
+   month integer unsigned not null,
+   local integer unsigned not null,
+   inter integer unsigned not null,
+   intra integer unsigned not null,
+   intl  integer unsigned not null,
+   tf    integer unsigned not null
+);
+
 -- test data
-----------
+
+insert into customer_bill set
+   year  = 2010,
+   month = 2,
+   local = 985999, 
+   inter = 1414667,  
+   intra = 1026509, 
+   intl  = 20900,
+   tf    = 350681;
+
+insert into customer_bill set
+   year  = 2010,  
+   month = 1,
+   local = 972364,
+   inter = 1370103, 
+   intra = 998948,
+   intl  = 21569,
+   tf    = 552260;
+
+insert into customer_bill set
+   year  = 2010,
+   month = 0,
+   local = 805317, 
+   inter = 1155128,   
+   intra = 801735,  
+   intl  = 16906 ,  
+   tf    = 446819;
+
+insert into customer_bill set
+   year  = 2009,  
+   month = 11 ,
+   local = 1135220,  
+   inter = 1100655, 
+   intra = 981336,
+   intl  = 11859,
+   tf    = 326578;
+
+insert into customer_bill set
+   year  = 2009,  
+   month = 10 ,
+   local = 1289827,  
+   inter = 992027,
+   intra = 1056067, 
+   intl  = 16194,
+   tf    = 371403;
 
 insert into project set
    name = 'visicalc',
